@@ -1,0 +1,18 @@
+version: "3.3"
+services:
+
+  # JANUS SERVER
+  janus_server:
+    container_name: janus_server
+    restart: always
+    build: janus-server/
+    ports:
+      - "8088:8088"
+
+  # JANUS DEMOS
+  janus_demos:
+    container_name: janus_demos
+    restart: always
+    build: janus-demos/
+    ports:
+      - "3000:3000"

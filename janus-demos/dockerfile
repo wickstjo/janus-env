@@ -1,0 +1,27 @@
+FROM ubuntu:latest
+
+# UPDATE
+RUN apt-get update
+RUN apt-get upgrade
+
+# MAKE NON INTERACTIVE
+ENV DEBIAN_FRONTEND=noninteractive
+
+# INSTALL APTITUDE & GIT
+RUN apt-get install -y nodejs npm git
+
+# FETCH JANUS STUFF
+RUN git clone https://github.com/meetecho/janus-gateway.git
+
+# COPY EXPRESS APP FILES
+COPY app app
+
+# COPY JANUS HTML FILES & SET WORKDIR
+RUN mv janus-gateway/html app/
+WORKDIR app
+
+# INSTALL NODE DEPENDENCIES
+RUN npm install
+
+# START SERVER
+CMD ["nodejs", "app.js"]
